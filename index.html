@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ID.GRK.UTI00 POWER PLANT SYSTEM</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-title">
+    <!-- Kontainer Logo -->
+    <span class="logo-wrapper" id="logo-place"></span>
+    GRESIK UTILITY SYSTEMS
+  </div>
+
+  <nav class="nav-menu">
+    <div class="nav-item active" onclick="switchPage(this, 'general')">General</div>
+    <div class="nav-item" onclick="switchPage(this, 'boiler')">Boiler</div>
+    <div class="nav-item" onclick="switchPage(this, 'turbine')">Turbine</div>
+    <div class="nav-item" onclick="switchPage(this, 'electrical')">Electrical</div>
+  </nav>
+</header>
+
+<div class="main-content">
+  <section id="page-general" class="page-section active">
+    <div class="page-title">📊 General Overview</div>
+    <div class="placeholder-card">
+      Halaman Overview Utama. Sistem Monitoring Plant Aktif.
+    </div>
+  </section>
+
+  <section id="page-boiler" class="page-section">
+    <div class="page-title">🔥 Boiler System Layout</div>
+    
+    <div class="sub-nav">
+        <div class="sub-item active" onclick="switchBoilerLayout(this, 'stoker')">Boiler Stoker 75 TPH</div>
+        <div class="sub-item" onclick="switchBoilerLayout(this, 'cfb')">Boiler CFB</div>
+        <div class="sub-item" onclick="switchBoilerLayout(this, 'aux')">Auxiliary Boiler</div>
+    </div>
+
+    <!-- Kontainer Diagram Boiler Stoker -->
+    <div class="diagram-wrapper active" id="diagram-stoker">
+      <div class="placeholder-card" id="loading-stoker">Memuat Diagram...</div>
+    </div>
+
+    <!-- Kontainer Boiler CFB -->
+    <div class="diagram-wrapper" id="diagram-cfb">
+        <div class="placeholder-card">
+            [ BOILER CFB UNIT 2 ]<br>
+            <span style="font-size: 1rem; opacity: 0.6;">Menunggu File SVG...</span>
+        </div>
+    </div>
+
+    <!-- Kontainer Aux Boiler -->
+    <div class="diagram-wrapper" id="diagram-aux">
+        <div class="placeholder-card">
+            [ AUXILIARY BOILER UNIT ]<br>
+            <span style="font-size: 1rem; opacity: 0.6;">Menunggu File SVG...</span>
+        </div>
+    </div>
+  </section>
+
+  <section id="page-turbine" class="page-section">
+    <div class="page-title">🌀 Turbine & Generator</div>
+    <div class="placeholder-card">Halaman Sistem Turbin.</div>
+  </section>
+
+  <section id="page-electrical" class="page-section">
+    <div class="page-title">⚡ Electrical Distribution</div>
+    <div class="placeholder-card">Halaman Sistem Kelistrikan.</div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-status">
+    <div class="status-indicator">
+      <div class="dot"></div>SYSTEM STATUS: ONLINE
+    </div>
+    <span>|</span> <span>LOCATION: GRESIK PLANT</span> <span>|</span>
+    <span id="live-clock">00:00:00</span>
+  </div>
+  <div class="footer-copyright">
+    © 2026 GRESIK UTILITY SYSTEMS - INDUSTRIAL INTERFACE V3.0
+  </div>
+</footer>
+
+<div class="info-popup" id="info-popup">
+  <div class="info-popup-title" id="popup-title">Title</div>
+  <div id="popup-body">Body</div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/zoom.js"></script>
+<script src="js/interactions.js"></script>
+</body>
+</html>
