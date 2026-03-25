@@ -3,7 +3,7 @@
 <rect width="3600" height="2769" fill="#0A0D14"/>
 <rect id="rect STEAM" x="1190" y="864" width="360" height="180" rx="45" fill="#1E1C1C" stroke="#FFF600" stroke-width="3"/>
 <rect id="rect ELECT" x="2050" y="864" width="360" height="180" rx="45" fill="#1E1C1C" stroke="#D63C3C" stroke-width="3"/>
-<rect id="rect COMP" x="1190" y="1724" width="360" height="180" rx="45" fill="#1E1C1C" stroke="#24742F" stroke-width="3"/>
+<rect id="rect COMP" x="1190" y="1724" width="360" height="180" rx="45" fill="#1E1C1C" stroke="#1EC435" stroke-width="3"/>
 <rect id="rect WATER" x="2050" y="1724" width="360" height="180" rx="45" fill="#1E1C1C" stroke="#41B9B1" stroke-width="3"/>
 <text id="AIR COMPRESSOR" fill="#75EA83" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="1331.12" y="1802.43">AIR </tspan><tspan x="1240.39" y="1856.43">COMPRESSOR</tspan></text>
 <text id="STEAM" fill="#ECE998" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="1304.7" y="969.432">STEAM</tspan></text>
@@ -25,29 +25,21 @@ g id="STEAM_LINES">
   <path id="yellow TANK" d="M1459 535.498L1660.5 736.999L2741 736.999L2994.5 483.498" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
   <path id="yellow HYDRO" d="M1190 969.303L839.499 969.303L604.803 1204L604.803 1346" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
   <path id="yellow FAME" d="M1428 1045.5L1428 1528.5V1531L1273.5 1685.5L1085.5 1685.5L910.498 1860.5L910.498 2032.5L663.5 2279.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
-  <!-- Jalur UTI: Dibalik (Start dari 1865.5 ke 1840) -->
   <path id="yellow UTI" d="M1865.5 1172.5L1840 1198V1339.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
   <path id="yellow GLY" d="M1550 957.5H1653L1866.5 1171L1893 1144.5H2026.22L2266 1384.28L2575.22 1693.5V2130.72L2730 2285.5H2862.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
   <path id="yellow FRACT" d="M1460.5 1046L1460.5 1528L1800 1867.5L1800 2278" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
-  <!-- Jalur SPLIT: Dibalik (Start dari 2422 ke 2878) -->
   <path id="yellow SPLIT" d="M2422 1538.5L2576 1384.5L2878 1384.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
 </g>
 
 <g id="ELECT_LINES">
-  <!-- Jalur GENERAL: Dibalik (Start dari 2173.5 ke 542.5) -->
   <path id="red GENERAL" d="M2173.5 863.5L2071 761H821L542.5 482.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
-  <!-- Jalur FRACT: Dibalik (Start dari 1889 ke 1833) -->
   <path id="red FRACT" d="M1889 1199.5L1960.5 1271V1737.5L1833 1865V2278.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
-  <!-- Jalur UTI: Dibalik (Start dari 2200.5 ke 1868) -->
   <path id="red UTI" d="M2200.5 1044V1100.92L2126.5 1174.92H1911.5L1868 1218.42V1342" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
   <path id="red FAME" d="M1832.5 1940.5L1724.5 2048.5H931L700.5 2279" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
   <path id="red HYDRO" d="M2050 959.5H1815.5L1651.5 1123.5H736.5L636.5 1223.5V1346" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
   <path id="red GLY" d="M2232 1044V1408.5L2543.5 1720V2156.5L2715 2328H2860.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
-  <!-- Jalur SOAP: Dibalik (Start dari 2264 ke 1741) -->
   <path id="red SOAP" d="M2264 864.5V763.5L2084 583.5H1842L1741 482.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
-  <!-- Jalur TANK: Dibalik (Start dari 2412.5 ke 3037.5) -->
   <path id="red TANK" d="M2412.5 962H2559L3037.5 483.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
-  <!-- Jalur SPLIT: Dibalik (Start dari 2410 ke 2994) -->
   <path id="red SPLIT" d="M2410 998H2643L2808.5 1163.5H2907L2994 1250.5V1346.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
 </g>
 
@@ -64,14 +56,13 @@ g id="STEAM_LINES">
 </g>
 
 <g id="COMP_LINES">
-  <path id="green TANK" d="M1830 712.5H2720L2950 482.5" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
-  <!-- Jalur FAME: Dibalik (Start dari 1188 ke 627) -->
-  <path id="green FAME" d="M1188 1829H979L889.5 1918.5V2017.5L627 2280" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
-  <path id="green FRACT" d="M1551 1819H1688.5L1766 1896.5V2279" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
-  <path id="green HYDRO" d="M1122.5 1829V1545.5L966 1389H732.5" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
-  <path id="green SOAP" d="M1491 1723.5L1491 1338L1829.5 999.5L1829.5 611.5L1700.5 482.5" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
-  <path id="green SPLIT" d="M1786 1045.5L2160 1419.5H2878" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
-  <path id="green GLY" d="M2610.5 1420.5V2094.5L2752.5 2236.5H2861.5" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
+  <path id="green TANK" d="M1830 712.5H2720L2950 482.5" stroke="#1EC435" stroke-width="4" stroke-linecap="round"/>
+  <path id="green FAME" d="M1188 1829H979L889.5 1918.5V2017.5L627 2280" stroke="#1EC435" stroke-width="4" stroke-linecap="round"/>
+  <path id="green FRACT" d="M1551 1819H1688.5L1766 1896.5V2279" stroke="#1EC435" stroke-width="4" stroke-linecap="round"/>
+  <path id="green HYDRO" d="M1122.5 1829V1545.5L966 1389H732.5" stroke="#1EC435" stroke-width="4" stroke-linecap="round"/>
+  <path id="green SOAP" d="M1491 1723.5L1491 1338L1829.5 999.5L1829.5 611.5L1700.5 482.5" stroke="#1EC435" stroke-width="4" stroke-linecap="round"/>
+  <path id="green SPLIT" d="M1786 1045.5L2160 1419.5H2878" stroke="#1EC435" stroke-width="4" stroke-linecap="round"/>
+  <path id="green GLY" d="M2610.5 1420.5V2094.5L2752.5 2236.5H2861.5" stroke="#1EC435" stroke-width="4" stroke-linecap="round"/>
 </g>
 </g>
 </svg>

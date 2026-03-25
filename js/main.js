@@ -1,4 +1,4 @@
-// DATA INFORMASI ALAT (Database)
+// Equipment Information
 const equipInfo = {
   'FURNACE': { title: 'FURNACE', body: 'Ruang bakar utama suhu tinggi (~700 °C) tempat terjadinya konversi energi batubara menjadi panas. Perpindahan panas dominan terjadi melalui radiasi.' },
   'BOTTOM ASH': { title: 'BOTTOM ASH', body: 'Abu berat sisa pembakaran yang jatuh ke bagian bawah boiler untuk selanjutnya dibuang sebagai limbah.' },
@@ -9,7 +9,7 @@ const equipInfo = {
   'FD FAN': { title: 'FORCED DRAFT FAN (FDF)', body: 'Kipas peniup udara pembakaran.' },
   'ID FAN': { title: 'INDUCED DRAFT FAN (IDF)', body: 'Kipas penghisap gas buang menuju cerobong (chimney).' },
   'BFP': { title: 'BOILER FEED PUMP (BFP)', body: 'Pompa air pengisi boiler dengan tekanan tinggi.' },
-  'AIR HEATER': { title: 'AIR HEATER (APH)', body: 'Pemanas udara pembakaran sebelum masuk ke furnace dengan menggunakan sisa panas dari gas buang.' },
+  'AIR HEATER': { title: 'AIR HEATER (AH)', body: 'Pemanas udara pembakaran sebelum masuk ke furnace dengan menggunakan sisa panas dari gas buang.' },
   'STEAM DRUM': { title: 'STEAM DRUM', body: 'Bejana pemisah antara uap jenuh dan air boiler.' },
   'SUPERHEATER': { title: 'SUPERHEATER (SH)', body: 'Pemanas steam lanjut menjadi steam kering untuk suplai ke steam turbine.' },
   'ECONOMIZER': { title: 'ECONOMIZER', body: 'Pemanas awal air umpan boiler memanfaatkan temperatur gas buang yang masih tinggi.' },
@@ -43,7 +43,7 @@ function switchPage(el, pageId) {
   document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
   document.getElementById('page-' + pageId).classList.add('active');
   
-  // Refresh zoom dan interaksi saat ganti menu
+  // Zoom and Interaction Refresh
   setTimeout(() => { 
       if(typeof initBoilerInteractions === 'function') initBoilerInteractions(); 
       if(typeof resetZoom === 'function') resetZoom(); 
@@ -69,7 +69,7 @@ function switchBoilerLayout(el, layoutKey) {
 }
 
 // ==========================================
-// PERBAIKAN: FUNGSI FILTER YANG HILANG
+// FILTER FUNCTIONS
 // ==========================================
 function initFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
