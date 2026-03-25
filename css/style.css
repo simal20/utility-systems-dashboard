@@ -72,35 +72,25 @@ footer { background: var(--panel); border-top: 1px solid var(--border); padding:
    ======================================================= */
 rect, circle, ellipse, polygon { animation: none !important; stroke-dasharray: none !important; }
 
-/* 1. KUNCI UTAMA: Animasi Garis Mengalir (Target Group & Warna) */
-[id*="STEAM_LINES" i] path, [id*="ELECT_LINES" i] path, [id*="WATER_LINES" i] path, [id*="COMP_LINES" i] path,
-[id*="STEAM_LINES" i] line, [id*="ELECT_LINES" i] line, [id*="WATER_LINES" i] line, [id*="COMP_LINES" i] line,
-[stroke="#FFF600" i], [stroke="#D63C3C" i], [stroke="#41B9B1" i], [stroke="#24742F" i],
-[stroke="#0066FF" i], [stroke="#41BA4F" i], [stroke="#D37FCC" i], [stroke="#7F3779" i], 
-[stroke="#DB7241" i], [stroke="#977A58" i], [stroke="#806341" i], [stroke="#75EA83" i], [stroke="#90EAE6" i] {
+/* Menyatukan semua target elemen berdasarkan ID Grup dan Warna menjadi satu aliran Forward Natural */
+#STEAM_LINES path, #ELECT_LINES path, #WATER_LINES path, #COMP_LINES path,
+svg [stroke="#0066FF"], svg [stroke="#41BA4F"], svg [stroke="#D37FCC"], 
+svg [stroke="#7F3779"], svg [stroke="#D63C3C"], svg [stroke="#DB7241"], 
+svg [stroke="#FFF600"], svg [stroke="#977A58"], svg [stroke="#806341"], 
+svg [stroke="#75EA83"], svg [stroke="#90EAE6"] {
     stroke-dasharray: 20 20 !important;
     animation: figmaDashFlow 4s linear infinite !important;
 }
 
-/* 2. PROTEKSI: Kotak dan Lingkaran dilarang ikut bergerak */
-rect, circle, ellipse, polygon {
-    animation: none !important;
-    stroke-dasharray: none !important;
-}
-
-/* 3. KUNCI INGGRIS: Kembalikan class reverse untuk membalik arah yang salah */
-.flow-reverse, [id*="REVERSE" i] { 
-    animation-direction: reverse !important; 
-}
-
-/* 4. KEYFRAME ALIRAN */
 @keyframes figmaDashFlow { 
     from { stroke-dashoffset: 0; } 
     to { stroke-dashoffset: -240; } 
 }
 
-/* 5. EFEK GLOW / PENDAR */
-.furnace-glow, [id*="GLOW" i], [id*="FIRE" i] { 
+/* =======================================================
+   EFEK VISUAL: GLOW, SMOKE & SPIN
+   ======================================================= */
+.furnace-glow { 
     animation: glowFurnace 2.5s infinite alternate ease-in-out !important; 
     transform-box: fill-box;
     transform-origin: center;
@@ -110,8 +100,7 @@ rect, circle, ellipse, polygon {
     100% { filter: brightness(1.3) drop-shadow(0 0 50px #EF7B45); opacity: 1; } 
 }
 
-/* 6. EFEK ASAP CEROBONG */
-.smoke-anim, [id*="SMOKE" i], [id*="ASAP" i] { 
+.smoke-anim { 
     transform-box: fill-box; 
     transform-origin: center; 
     animation: smokeRise 6s infinite ease-in forwards !important; 
@@ -122,8 +111,7 @@ rect, circle, ellipse, polygon {
     100% { transform: translateY(-800px) scale(3.5); opacity: 0; } 
 }
 
-/* 7. EFEK KIPAS BERPUTAR (Mencari ID yang mengandung kata BLADE) */
-[id*="BLADE" i] { 
+.fan-spin { 
     animation: spinFan 2s linear infinite !important; 
     transform-box: fill-box !important; 
     transform-origin: 50% 50% !important; 

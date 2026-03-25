@@ -1,44 +1,16 @@
-let zoomScale = 1, pointX = 0, pointY = 0, isPanning = false, startPos = { x: 0, y: 0 };
-let currentSvg = null; 
+// ==========================================
+// 1. ISOLASI STATE UNTUK TIAP DIAGRAM (Anti-Bocor antar Tab)
+// ==========================================
+function attachInteractions(wrapper) {
+    if (wrapper.dataset.interacted) return; // Cegah dobel event
+    wrapper.dataset.interacted = 'true';
 
-function resetZoom() { 
-    zoomScale = 1; pointX = 0; pointY = 0; 
-    applyTransform(); 
-}
+    let scale = 1, posX = 0, posY = 0, startX = 0, startY = 0;
+    let isDragging = false;
 
-function applyTransform() {
-function resetZoom() { zoomScale = 1; pointX = 0; pointY = 0; applyTransform(); }
-
-function applyTransform() {
-    // PERBAIKAN 1: Cari SVG hanya di Halaman yang sedang Aktif (agar Distribusi bisa di-zoom)
-    const activePage = document.querySelector('.page-section.active');
-    const svg = activePage ? activePage.querySelector('.diagram-wrapper.active svg') : null;
-    if (svg) svg.style.transform = `translate3d(${pointX}px, ${pointY}px, 0) scale(${zoomScale})`;
-}
-
-function initBoilerInteractions() {
-    // PERBAIKAN 2: Batasi jangkauan interaksi hanya pada Halaman yang Aktif
-    const activePage = document.querySelector('.page-section.active');
-    if (!activePage) return;
-    
-    const container = activePage.querySelector('.diagram-wrapper.active');
-    const svg = container ? container.querySelector('svg') : null;
-    if (!container || !svg) return;
-
-    // SCROLL ZOOM
-    container.onwheel = (e) => {
-        e.preventDefault();
-        const delta = e.wheelDelta ? e.wheelDelta : -e.deltaY;
-        const xs = (e.clientX - pointX) / zoomScale;
-        const ys = (e.clientY - pointY) / zoomScale;
-        
-        if (delta > 0) zoomScale *= 1.1; 
-        else zoomScale /= 1.1;
-        
-        zoomScale = Math.min(Math.max(0.1, zoomScale), 15); 
-        pointX = e.clientX - xs * zoomScale;
-        pointY = e.clientY - ys * zoomScale;
-        applyTransform();
+    const apply = () => {
+        const svg = wrapper.querySelector('svg');
+        if (svg) svg.style.transform = `translate3d(${posX}px, ${posY}px, 0) scale(${scale})`;
     };
 
     // A. SCROLL MOUSE (DESKTOP)
@@ -62,24 +34,69 @@ function initBoilerInteractions() {
         wrapper.style.cursor = 'grabbing';
     };
 
-    // -- EVENT: MOUSE UP (PAN END) --
-    window.onmouseup = () => {
-        isPanning = false;
-        if(container) container.style.cursor = 'grab';
-    // HOVER TOOLTIP
-    const popup = document.getElementById('info-popup');
-    svg.querySelectorAll('*').forEach(el => {
-        const id = (el.getAttribute('id') || '').toUpperCase();
-        
-        // PERBAIKAN 3: Abaikan elemen Group (<g>) agar tidak merusak fungsi tombol Filter STEAM
-        if (el.tagName === 'g' || el.tagName === 'defs' || id === 'STM01' || id.startsWith('LINE')) { 
-            el.style.pointerEvents = 'none'; 
-            return; 
+    // C. INTEGRASI MOBILE (TOUCH & PINCH TO ZOOM)
+    let initialDist = null;
+    let initialScale = 1;
+
+    wrapper.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            isDragging = true;
+            startX = e.touches[0].clientX - posX;
+            startY = e.touches[0].clientY - posY;
+        } else if (e.touches.length === 2) {
+            isDragging = false;
+            initialDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            initialScale = scale;
         }
-        
-        let key = Object.keys(equipInfo).find(k => id.includes(k) || el.textContent.toUpperCase().includes(k));
-        if (key) {
-                el.style.cursor = 'help'; 
+    }, {passive: false});
+
+    wrapper.addEventListener('touchmove', (e) => {
+        e.preventDefault(); 
+        if (isDragging && e.touches.length === 1) {
+            posX = e.touches[0].clientX - startX;
+            posY = e.touches[0].clientY - startY;
+            apply();
+        } else if (e.touches.length === 2 && initialDist) {
+            const currentDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            scale = Math.min(Math.max(0.1, initialScale * (currentDist / initialDist)), 15);
+            apply();
+        }
+    }, {passive: false});
+
+    const endDrag = () => { isDragging = false; initialDist = null; wrapper.style.cursor = 'grab'; };
+    window.addEventListener('mousemove', (e) => {
+        if (isDragging) { posX = e.clientX - startX; posY = e.clientY - startY; apply(); }
+    });
+    window.addEventListener('mouseup', endDrag);
+    wrapper.addEventListener('touchend', endDrag);
+    wrapper.addEventListener('mouseleave', endDrag);
+
+    // Fungsi reset mandiri tiap wrapper
+    wrapper.resetZoom = () => { scale = 1; posX = 0; posY = 0; apply(); };
+}
+
+// ==========================================
+// 2. INJEKSI ANIMASI & HOVER (Dijalankan pasca Load)
+// ==========================================
+function initializeSVGFeatures(svg) {
+    if (!svg || svg.dataset.initialized) return;
+    svg.dataset.initialized = 'true';
+
+    // A. Paksa Suntik Class Animasi (Api, Asap, Kipas) berdasarkan ID
+    svg.querySelectorAll('[id="GLOW FIRE"]').forEach(el => el.classList.add('furnace-glow'));
+    svg.querySelectorAll('[id="SMOKE"]').forEach(el => el.classList.add('smoke-anim'));
+    svg.querySelectorAll('[id^="blade"]').forEach(el => el.classList.add('fan-spin'));
+
+    // B. Logika Hover Tooltip
+    const popup = document.getElementById('info-popup');
+    if (popup && typeof equipInfo !== 'undefined') {
+        svg.querySelectorAll('*').forEach(el => {
+            const id = (el.getAttribute('id') || '').toUpperCase();
+            if (!id || id.startsWith('LINE') || el.tagName === 'g' || el.tagName === 'defs') return;
+
+            let key = Object.keys(equipInfo).find(k => id.includes(k) || (el.textContent && el.textContent.toUpperCase().includes(k)));
+            if (key) {
+                el.style.cursor = 'help';
                 el.style.pointerEvents = 'all';
                 el.onmouseenter = () => {
                     document.getElementById('popup-title').innerText = equipInfo[key].title;
@@ -88,18 +105,31 @@ function initBoilerInteractions() {
                 };
                 el.onmousemove = (e) => { popup.style.left = (e.clientX + 20) + 'px'; popup.style.top = (e.clientY + 20) + 'px'; };
                 el.onmouseleave = () => popup.classList.remove('visible');
-        }
-    });
-
-    // PERBAIKAN 4: Injeksi Animasi Paksa untuk Api, Asap, dan Kipas
-    svg.querySelectorAll('[id*="GLOW" i], [id*="FIRE" i], [id*="FURNACE" i]').forEach(el => el.classList.add('furnace-glow'));
-    svg.querySelectorAll('[id*="SMOKE" i], [id*="ASAP" i]').forEach(el => el.classList.add('smoke-anim'));
-    svg.querySelectorAll('[id^="blade" i]').forEach(f => f.classList.add('fan-spin'));
+            }
+        });
+    }
 }
 
-// PERBAIKAN 5: Radar Observer Otomatis saat ganti tab
-window.addEventListener('load', () => {
-    initBoilerInteractions();
-    const observer = new MutationObserver(initBoilerInteractions);
-    document.querySelectorAll('.diagram-wrapper').forEach(w => observer.observe(w, { childList: true }));
+// ==========================================
+// 3. RADAR MUTATION OBSERVER
+// ==========================================
+const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => mutation.addedNodes.forEach(node => {
+        if (node.tagName && node.tagName.toLowerCase() === 'svg') initializeSVGFeatures(node);
+    }));
 });
+
+window.addEventListener('load', () => {
+    document.querySelectorAll('.diagram-wrapper').forEach(wrapper => {
+        attachInteractions(wrapper); // Pasang event pan/zoom ke wadah
+        observer.observe(wrapper, { childList: true }); // Awasi isi wadah
+        const existingSvg = wrapper.querySelector('svg');
+        if (existingSvg) initializeSVGFeatures(existingSvg);
+    });
+});
+
+window.resetZoom = () => {
+    const activeWrapper = document.querySelector('.diagram-wrapper.active');
+    if (activeWrapper && activeWrapper.resetZoom) activeWrapper.resetZoom();
+};
+window.initBoilerInteractions = () => {}; // Alias dummy agar main.js tidak error
