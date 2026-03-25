@@ -86,5 +86,6 @@ window.addEventListener('load', () => {
     // Get all SVGs
     loadSVG('assets/logo-pabrikin.svg', 'logo-place');
     loadSVG('assets/boiler75.svg', 'diagram-stoker');
+    loadSVG('assets/distribution.svg', 'diagram-distribution');
     initFilters();
 });
