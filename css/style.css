@@ -1,368 +1,94 @@
-/* --- PERBAIKAN IMPORT FONT --- */
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;800&display=swap');
+// DATA INFORMASI ALAT (Database)
+const equipInfo = {
+    'FURNACE': { title: 'BOILER FURNACE', body: 'Ruang bakar utama suhu tinggi (900-1100°C) tempat terjadinya konversi energi batubara menjadi panas.' },
+    'ESP': { title: 'ELECTROSTATIC PRECIPITATOR', body: 'Alat penangkap debu halus menggunakan medan listrik statis tegangan tinggi.' },
+    'STEAM': { title: 'MAIN STEAM HEADER', body: 'Jalur utama distribusi uap tekanan tinggi menuju proses produksi dan turbin.' },
+    'ELECTRICITY': { title: 'POWER GRID 20kV', body: 'Pusat distribusi kelistrikan dari Generator dan PLN menuju substation tiap plant.' },
+    'RAW WATER': { title: 'RAW WATER INTAKE', body: 'Sistem suplai air mentah sebelum diproses oleh Water Treatment Plant.' },
+    'AIR COMPRESSOR': { title: 'INSTRUMENT AIR', body: 'Sistem udara bertekanan kering untuk menggerakkan control valve di lapangan.' }
+};
 
-:root {
-  --bg:        #0a0d14;
-  --panel:     #111827;
-  --panel2:    #1a2236;
-  --border:    #2a3a55;
-  --accent-orange: #f97316;
-  --accent-red:    #ef4444;
-  --accent-blue:   #38bdf8;
-  --accent-cyan:   #06b6d4;
-  --accent-green:  #22c55e;
-  --accent-yellow: #facc15;
-  --text:     #e2e8f0;    
-  --text-dim: #94a3b8;
+let zoomScale = 1, pointX = 0, pointY = 0, isPanning = false, startPos = { x: 0, y: 0 };
+
+function resetZoom() { 
+    zoomScale = 1; pointX = 0; pointY = 0; 
+    applyTransform(); 
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Exo 2', sans-serif;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; 
+function applyTransform() {
+    const svg = document.querySelector('.diagram-wrapper.active svg');
+    if (svg) svg.style.transform = `translate3d(${pointX}px, ${pointY}px, 0) scale(${zoomScale})`;
 }
 
-/* --- FORCE FONT UNTUK SVG --- */
-svg text, svg tspan {
-    font-family: 'Share Tech Mono', monospace !important;
+// Fungsi utama yang menangani Zoom, Pan, Tooltip, dan Animasi SVG
+function initZoomAndPan() {
+    const container = document.querySelector('.diagram-wrapper.active');
+    const svg = container ? container.querySelector('svg') : null;
+    if (!container || !svg) return;
+
+    // SCROLL ZOOM
+    container.onwheel = (e) => {
+        e.preventDefault();
+        const delta = e.wheelDelta ? e.wheelDelta : -e.deltaY;
+        const xs = (e.clientX - pointX) / zoomScale;
+        const ys = (e.clientY - pointY) / zoomScale;
+        if (delta > 0) zoomScale *= 1.1; else zoomScale /= 1.1;
+        zoomScale = Math.min(Math.max(0.1, zoomScale), 15);
+        pointX = e.clientX - xs * zoomScale;
+        pointY = e.clientY - ys * zoomScale;
+        applyTransform();
+    };
+
+    // DRAG PAN
+    container.onmousedown = (e) => { 
+        e.preventDefault(); 
+        startPos = { x: e.clientX - pointX, y: e.clientY - pointY }; 
+        isPanning = true; 
+    };
+    window.onmousemove = (e) => { 
+        if (!isPanning) return; 
+        pointX = e.clientX - startPos.x; 
+        pointY = e.clientY - startPos.y; 
+        applyTransform(); 
+    };
+    window.onmouseup = () => isPanning = false;
+
+    // HOVER TOOLTIP
+    const popup = document.getElementById('info-popup');
+    if (popup) {
+        svg.querySelectorAll('*').forEach(el => {
+            const id = (el.getAttribute('id') || '').toUpperCase();
+            if (id === 'STM01' || id.startsWith('LINE')) { 
+                el.style.pointerEvents = 'none'; 
+                return; 
+            }
+            
+            let key = Object.keys(equipInfo).find(k => id.includes(k) || el.textContent.toUpperCase().includes(k));
+            if (key) {
+                el.style.cursor = 'help'; el.style.pointerEvents = 'all';
+                el.onmouseenter = () => {
+                    document.getElementById('popup-title').innerText = equipInfo[key].title;
+                    document.getElementById('popup-body').innerText = equipInfo[key].body;
+                    popup.classList.add('visible');
+                };
+                el.onmousemove = (e) => {
+                    popup.style.left = (e.clientX + 20) + 'px';
+                    popup.style.top = (e.clientY + 20) + 'px';
+                };
+                el.onmouseleave = () => popup.classList.remove('visible');
+            }
+        });
+    }
+
+    // ANIMATIONS
+    const fire = svg.getElementById('GLOW FIRE') || svg.querySelector('[id="GLOW FIRE"]');
+    if (fire) fire.classList.add('furnace-glow');
+    svg.querySelectorAll('[id^="blade"], [id^="BLADE"]').forEach(f => f.classList.add('fan-spin'));
 }
 
-/* --- HEADER & NAVIGATION --- */
-header {
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-  border-bottom: 2px solid var(--accent-blue);
-  padding: 10px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  z-index: 1000;
-  box-shadow: 0 4px 40px rgba(56,189,248,0.15);
-  gap: 15px;
-}
+// Alias agar fungsi tetap bisa dipanggil dari main.js tanpa error
+window.initBoilerInteractions = initZoomAndPan;
+window.initZoomAndPan = initZoomAndPan;
 
-.header-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent-blue);
-  white-space: nowrap;
-}
-
-.logo-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.8rem; 
-}
-.logo-wrapper svg { height: 100%; width: auto; }
-
-.nav-menu {
-  display: flex;
-  gap: 5px;
-  background: rgba(0,0,0,0.3);
-  padding: 5px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
-.nav-item {
-  padding: 6px 15px;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.2s;
-  letter-spacing: 1px;
-}
-
-.nav-item:hover { color: var(--text); background: rgba(56,189,248,0.1); }
-.nav-item.active { 
-  color: #fff; 
-  background: var(--accent-blue); 
-  box-shadow: 0 0 15px rgba(56,189,248,0.4);
-}
-
-/* --- MAIN CONTENT --- */
-.main-content { 
-  flex: 1;
-  padding: 15px 40px; 
-  width: 100%; 
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.page-section {
-  display: none;
-  width: 100%;
-  height: 100%;
-}
-
-.page-section.active { 
-  display: flex;
-  flex-direction: column;
-}
-
-.sub-nav {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 10px;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent-blue) transparent;
-}
-
-.sub-nav::-webkit-scrollbar { height: 4px; }
-.sub-nav::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 10px; }
-
-.sub-item {
-  padding: 5px 15px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--text-dim);
-  cursor: pointer;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  text-transform: uppercase;
-  transition: 0.2s;
-  white-space: nowrap;
-}
-
-.sub-item.active { 
-    background: rgba(56, 189, 248, 0.1);
-    border-color: var(--accent-blue);
-    color: var(--accent-blue);
-}
-
-.page-title {
-  font-family: 'Rajdhani', sans-serif;
-  color: var(--accent-yellow);
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.placeholder-card {
-  background: var(--panel2);
-  border: 1px dashed var(--border);
-  padding: 30px;
-  text-align: center;
-  border-radius: 12px;
-  color: var(--text-dim);
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-family: 'Rajdhani';
-  font-size: 1.2rem;
-}
-
-/* --- DIAGRAM WRAPPER --- */
-.diagram-wrapper {
-  position: relative;
-  background: #0A0D14;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  flex: 1;
-  width: 100%;
-  display: none; 
-  align-items: center;
-  justify-content: center;
-  cursor: grab;
-  user-select: none;
-}
-.diagram-wrapper.active { display: flex; }
-.diagram-wrapper svg { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform 0.05s ease-out; }
-
-/* --- FOOTER --- */
-footer {
-  background: var(--panel);
-  border-top: 1px solid var(--border);
-  padding: 10px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  gap: 10px;
-}
-
-.footer-status { display: flex; align-items: center; gap: 15px; }
-.status-indicator { display: flex; align-items: center; gap: 6px; color: var(--accent-green); }
-.dot { width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 10px var(--accent-green); animation: pulse 1.5s infinite ease-in-out; }
-
-/* --- RESPONSIVE DESIGN --- */
-@media (max-width: 768px) {
-    header { flex-direction: column; padding: 15px 20px; align-items: center; text-align: center; }
-    .header-title { font-size: 1.1rem; flex-direction: column; gap: 5px; }
-    .logo-wrapper { height: 1.5rem; }
-    .nav-menu { width: 100%; justify-content: center; overflow-x: auto; }
-    .nav-item { padding: 6px 10px; font-size: 0.75rem; }
-    .main-content { padding: 10px 15px; }
-    footer { flex-direction: column; padding: 15px 20px; height: auto; text-align: center; }
-    .footer-status { flex-direction: column; gap: 5px; }
-    .footer-status span { display: none; }
-    .footer-copyright { font-size: 0.65rem; line-height: 1.4; }
-}
-
-/* --- ANIMATIONS (PERBAIKAN ALUR & ASAP) --- */
-/* 1. Definisi Dash Flow Dasar */
-svg [stroke="#0066FF"], svg [stroke="#41BA4F"], svg [stroke="#D37FCC"], 
-svg [stroke="#7F3779"], svg [stroke="#D63C3C"], svg [stroke="#DB7241"], 
-svg [stroke="#FFF600"], svg [stroke="#977A58"], svg [stroke="#806341"], 
-svg [stroke="#75EA83"], svg [stroke="#90EAE6"], svg rect[stroke="#777777"] {
-  stroke-dasharray: 20 20 !important;
-  animation: figmaDashFlow 4s linear infinite !important;
-}
-
-/* 2. Arah Bawaan (Default) */
-svg [stroke="#806341"], svg [stroke="#977A58"] { animation-direction: reverse !important; }
-svg rect[stroke="#777777"] { animation: figmaDashFlow 15s linear infinite !important; }
-
-/* 3. OVERRIDE MANUAL (DIPERKUAT) */
-svg [stroke].flow-reverse, 
-svg path.flow-reverse,
-.flow-reverse { 
-    animation-direction: reverse !important; 
-}
-
-svg [stroke].flow-forward, 
-svg path.flow-forward,
-.flow-forward { 
-    animation-direction: normal !important; 
-}
-
-@keyframes figmaDashFlow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -240; } }
-
-/* --- EFFECTS --- */
-#PETIR { animation: glowLightning 0.8s infinite alternate ease-in-out !important; }
-[id="GLOW FIRE"] { animation: glowFurnace 2.5s infinite alternate ease-in-out !important; }
-
-@keyframes glowLightning { 
-    0% { filter: brightness(1) drop-shadow(0 0 2px #DC3CCF); opacity: 0.8; } 
-    100% { filter: brightness(1.8) drop-shadow(0 0 15px #E274D9); opacity: 1; } 
-}
-@keyframes glowFurnace { 0% { filter: brightness(0.9); } 100% { filter: brightness(1.15) drop-shadow(0 0 35px #EF7B45); } }
-
-.fan-spin { 
-    animation: spinFan 2s linear infinite !important; 
-    transform-box: fill-box !important;
-    transform-origin: 50% 50% !important; 
-}
-@keyframes spinFan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-/* PERBAIKAN ANIMASI ASAP: Menambahkan titik 20% agar asap terlihat */
-.smoke-anim {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: smokeRise 6s infinite ease-in forwards !important;
-}
-@keyframes smokeRise { 
-    0%   { transform: translateY(0) scale(0.6); opacity: 0; } 
-    20%  { opacity: 0.7; } 
-    100% { transform: translateY(-800px) scale(3.5); opacity: 0; } 
-}
-
-@keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
-
-/* --- POPUP --- */
-.info-popup { position: fixed; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 16px; max-width: 280px; font-size: 0.85rem; color: #fff; z-index: 99999; pointer-events: none; opacity: 0; transition: opacity 0.2s; }
-.info-popup.visible { opacity: 1; }/* --- FILTER PANEL --- */
-.filter-panel {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-    flex-wrap: wrap; /* Agar rapi di HP */
-}
-
-.filter-btn {
-    background: transparent;
-    border: 1px solid var(--color);
-    color: var(--color);
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 5px rgba(0,0,0,0);
-}
-
-.filter-btn:hover {
-    box-shadow: 0 0 10px var(--color);
-}
-
-/* Kondisi saat tombol ON (Aktif) */
-.filter-btn.active {
-    background: var(--color);
-    color: #0A0D14; /* Teks jadi gelap */
-    box-shadow: 0 0 15px var(--color);
-}
-
-/* Efek meredup pada SVG jika dimatikan */
-svg g { transition: opacity 0.3s ease; }
-svg g.dimmed { opacity: 0.05 !important; pointer-events: none; }
-
-/* ... existing code ... */
-/* 2. Arah Bawaan (Default) */
-svg [stroke="#806341"], svg [stroke="#977A58"] { animation-direction: reverse !important; }
-svg rect[stroke="#777777"] { animation: figmaDashFlow 15s linear infinite !important; }
-
-/* === PERBAIKAN DISTRIBUSI (TAMBAHKAN KODE INI) === */
-
-/* 1. Mencegah kotak (rect) ikut jalan, kecuali kotak abu-abu di layout Stoker lama */
-svg rect:not([stroke="#777777"]) {
-    animation: none !important;
-    stroke-dasharray: none !important;
-}
-
-/* 2. Memaksa SEMUA garis di dalam grup layer Figma untuk jalan (Sapu Jagat) */
-#STEAM_LINES path, #STEAM_LINES line, #STEAM_LINES polyline,
-#ELECT_LINES path, #ELECT_LINES line, #ELECT_LINES polyline,
-#WATER_LINES path, #WATER_LINES line, #WATER_LINES polyline,
-#COMP_LINES path, #COMP_LINES line, #COMP_LINES polyline {
-    stroke-dasharray: 20 20 !important;
-    animation: figmaDashFlow 4s linear infinite !important;
-}
-
-/* 3. Menghidupkan fungsi Filter (Meredupkan layer SVG yang tidak aktif) */
-.dimmed { 
-    opacity: 0.05 !important; 
-    pointer-events: none !important; 
-    transition: opacity 0.3s ease; 
-}
-/* ================================================ */
-
-/* 3. OVERRIDE MANUAL (DIPERKUAT) */
-svg [stroke].flow-reverse, 
-svg path.flow-reverse,
-/* ... existing code ... */
+// Jalankan saat web pertama dimuat
+window.addEventListener('load', initZoomAndPan);
