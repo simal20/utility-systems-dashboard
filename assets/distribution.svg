@@ -21,14 +21,14 @@
 <text id="SPLITTING" fill="white" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="2888" y="1399.43">SPLITTING</tspan></text>
 </g>
 <g id="STEAM_LINES">
-<path id="yellow SOAP" d="M1362 863.501L1362 630.51L1539.01 453.502L1635.5 453.502" stroke="#FFF600" stroke-width="3" stroke-linecap="round"/>
-<path id="yellow TANK" d="M1459 535.498L1660.5 736.999L2741 736.999L2994.5 483.498" stroke="#FFF600" stroke-width="3" stroke-linecap="round"/>
-<path id="yellow HYDRO" d="M1190 969.303L839.499 969.303L604.803 1204L604.803 1346" stroke="#FFF600" stroke-width="3" stroke-linecap="round"/>
-<path id="yellow FAME" d="M1428 1045.5L1428 1528.5V1531L1273.5 1685.5L1085.5 1685.5L910.498 1860.5L910.498 2032.5L663.5 2279.5" stroke="#FFF600" stroke-width="3" stroke-linecap="round"/>
-<path id="yellow UTI" d="M1840 1339.5V1198L1865.5 1172.5" stroke="#FFF600" stroke-width="3" stroke-linecap="round"/>
-<path id="yellow GLY" d="M1550 957.5H1653L1866.5 1171L1893 1144.5H2026.22L2266 1384.28L2575.22 1693.5V2130.72L2730 2285.5H2862.5" stroke="#FFF600" stroke-width="3" stroke-linecap="round"/>
-<path id="yellow FRACT" d="M1460.5 1046L1460.5 1528L1800 1867.5L1800 2278" stroke="#FFF600" stroke-width="3" stroke-linecap="round"/>
-<path id="yellow SPLIT" d="M2878 1384.5L2685 1384.5L2576 1384.5L2422 1538.5" stroke="#FFF600" stroke-width="3" stroke-linecap="round"/>
+<path id="yellow SOAP" d="M1362 863.501L1362 630.51L1539.01 453.502L1635.5 453.502" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
+<path id="yellow TANK" d="M1459 535.498L1660.5 736.999L2741 736.999L2994.5 483.498" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
+<path id="yellow HYDRO" d="M1190 969.303L839.499 969.303L604.803 1204L604.803 1346" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
+<path id="yellow FAME" d="M1428 1045.5L1428 1528.5V1531L1273.5 1685.5L1085.5 1685.5L910.498 1860.5L910.498 2032.5L663.5 2279.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
+<path id="yellow UTI" d="M1840 1339.5V1198L1865.5 1172.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
+<path id="yellow GLY" d="M1550 957.5H1653L1866.5 1171L1893 1144.5H2026.22L2266 1384.28L2575.22 1693.5V2130.72L2730 2285.5H2862.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
+<path id="yellow FRACT" d="M1460.5 1046L1460.5 1528L1800 1867.5L1800 2278" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
+<path id="yellow SPLIT" d="M2878 1384.5L2685 1384.5L2576 1384.5L2422 1538.5" stroke="#FFF600" stroke-width="43" stroke-linecap="round"/>
 </g>
 <g id="ELECT_LINES">
 <path id="red GENERAL" d="M542.5 482.5L821 761H2071L2173.5 863.5" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
