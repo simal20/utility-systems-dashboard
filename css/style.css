@@ -294,4 +294,40 @@ svg path.flow-forward,
 
 /* --- POPUP --- */
 .info-popup { position: fixed; background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 16px; max-width: 280px; font-size: 0.85rem; color: #fff; z-index: 99999; pointer-events: none; opacity: 0; transition: opacity 0.2s; }
-.info-popup.visible { opacity: 1; }
+.info-popup.visible { opacity: 1; }/* --- FILTER PANEL --- */
+.filter-panel {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* Agar rapi di HP */
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--color);
+    color: var(--color);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0,0,0,0);
+}
+
+.filter-btn:hover {
+    box-shadow: 0 0 10px var(--color);
+}
+
+/* Kondisi saat tombol ON (Aktif) */
+.filter-btn.active {
+    background: var(--color);
+    color: #0A0D14; /* Teks jadi gelap */
+    box-shadow: 0 0 15px var(--color);
+}
+
+/* Efek meredup pada SVG jika dimatikan */
+svg g { transition: opacity 0.3s ease; }
+svg g.dimmed { opacity: 0.05 !important; pointer-events: none; }

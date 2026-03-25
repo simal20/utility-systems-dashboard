@@ -19,7 +19,7 @@
     <div class="nav-item active" onclick="switchPage(this, 'general')">General</div>
     <div class="nav-item" onclick="switchPage(this, 'boiler')">Boiler</div>
     <div class="nav-item" onclick="switchPage(this, 'turbine')">Power</div>
-    <div class="nav-item" onclick="switchPage(this, 'turbine')">Water</div>
+    <div class="nav-item" onclick="switchPage(this, 'distribution')">Distribution</div>
   </nav>
 </header>
 
@@ -76,9 +76,20 @@
     <div class="placeholder-card">Content in development...</div>
   </section>
 
-  <section id="page-water" class="page-section">
-    <div class="page-title">Water Treatment</div>
-    <div class="placeholder-card">Content in development...</div>
+  <section id="page-distribution" class="page-section">
+    <div class="page-title">Distribution System</div>
+    
+    <div class="filter-panel">
+        <!-- Perhatikan data-target di bawah ini sudah disesuaikan dengan Figma Anda -->
+        <button class="filter-btn active" data-target="STEAM_LINES" style="--color: #FFF600;">Steam</button>
+        <button class="filter-btn active" data-target="ELECT_LINES" style="--color: #D63C3C;">Power</button>
+        <button class="filter-btn active" data-target="WATER_LINES" style="--color: #41B9B1;">Water</button>
+        <button class="filter-btn active" data-target="COMP_LINES" style="--color: #24742F;">Inst. Air</button>
+    </div>
+
+    <div class="diagram-wrapper active" id="diagram-distribution">
+      <div class="placeholder-card" id="loading-distribution">Memuat Diagram Distribusi...</div>
+    </div>
   </section>
 </div>
 

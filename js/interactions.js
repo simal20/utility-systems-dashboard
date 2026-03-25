@@ -87,3 +87,32 @@ const observer = new MutationObserver(() => {
   }
 });
 observer.observe(document.querySelector('.main-content'), { childList: true, subtree: true });
+
+// Masukkan fungsi ini di luar, lalu panggil saat halaman di-load
+function initFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    filterButtons.forEach(btn => {
+        // Hapus event listener lama agar tidak dobel jika dipanggil ulang
+        btn.onclick = function() {
+            // 1. Toggle warna tombol (Nyala/Mati)
+            this.classList.toggle('active');
+            
+            // 2. Cari grup garis di dalam SVG berdasarkan data-target
+            const targetId = this.getAttribute('data-target');
+            const svgGroups = document.querySelectorAll(`[id*="${targetId}"]`);
+            
+            // 3. Redupkan atau terangkan garisnya
+            svgGroups.forEach(group => {
+                if(this.classList.contains('active')) {
+                    group.classList.remove('dimmed'); // Muncul
+                } else {
+                    group.classList.add('dimmed');    // Hilang / Transparan
+                }
+            });
+        };
+    });
+}
+
+// Panggil fungsi ini di dalam window.onload bersama loadSVG
+// contoh: 
