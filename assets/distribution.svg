@@ -25,41 +25,41 @@
 <path id="yellow TANK" d="M1459 535.498L1660.5 736.999L2741 736.999L2994.5 483.498" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
 <path id="yellow HYDRO" d="M1190 969.303L839.499 969.303L604.803 1204L604.803 1346" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
 <path id="yellow FAME" d="M1428 1045.5L1428 1528.5V1531L1273.5 1685.5L1085.5 1685.5L910.498 1860.5L910.498 2032.5L663.5 2279.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
-<path id="yellow UTI" d="M1840 1339.5V1198L1865.5 1172.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
+<path id="yellow UTI" class="flow-reverse" d="M1840 1339.5V1198L1865.5 1172.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
 <path id="yellow GLY" d="M1550 957.5H1653L1866.5 1171L1893 1144.5H2026.22L2266 1384.28L2575.22 1693.5V2130.72L2730 2285.5H2862.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
 <path id="yellow FRACT" d="M1460.5 1046L1460.5 1528L1800 1867.5L1800 2278" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
-<path id="yellow SPLIT" d="M2878 1384.5L2685 1384.5L2576 1384.5L2422 1538.5" stroke="#FFF600" stroke-width="43" stroke-linecap="round"/>
+<path id="yellow SPLIT" class="flow-reverse" d="M2878 1384.5L2685 1384.5L2576 1384.5L2422 1538.5" stroke="#FFF600" stroke-width="4" stroke-linecap="round"/>
 </g>
 <g id="ELECT_LINES">
-<path id="red GENERAL" d="M542.5 482.5L821 761H2071L2173.5 863.5" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
-<path id="red FRACT" d="M1833 2278.5L1833 1865L1960.5 1737.5L1960.5 1271L1889 1199.5" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
-<path id="red UTI" d="M1868 1342V1218.42L1911.5 1174.92H2126.5L2200.5 1100.92V1044" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
-<path id="red FAME" d="M1832.5 1940.5L1724.5 2048.5H931L700.5 2279" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
-<path id="red HYDRO" d="M2050 959.5H1815.5L1651.5 1123.5H736.5L636.5 1223.5V1346" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
-<path id="red GLY" d="M2232 1044V1408.5L2543.5 1720V2156.5L2715 2328H2860.5" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
-<path id="red SOAP" d="M1741 482.5L1842 583.5H2084L2264 763.5V864.5" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
-<path id="red TANK" d="M3037.5 483.5L2559 962H2412.5" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
-<path id="red SPLIT" d="M2994 1346.5V1250.5L2907 1163.5H2808.5L2643 998L2410 998" stroke="#D63C3C" stroke-width="3" stroke-linecap="round"/>
+<path id="red GENERAL" class="flow-reverse" d="M542.5 482.5L821 761H2071L2173.5 863.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
+<path id="red FRACT" class="flow-reverse" d="M1833 2278.5L1833 1865L1960.5 1737.5L1960.5 1271L1889 1199.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
+<path id="red UTI" class="flow-reverse" d="M1868 1342V1218.42L1911.5 1174.92H2126.5L2200.5 1100.92V1044" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
+<path id="red FAME" d="M1832.5 1940.5L1724.5 2048.5H931L700.5 2279" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
+<path id="red HYDRO" d="M2050 959.5H1815.5L1651.5 1123.5H736.5L636.5 1223.5V1346" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
+<path id="red GLY" d="M2232 1044V1408.5L2543.5 1720V2156.5L2715 2328H2860.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
+<path id="red SOAP" class="flow-reverse" d="M1741 482.5L1842 583.5H2084L2264 763.5V864.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
+<path id="red TANK" class="flow-reverse" d="M3037.5 483.5L2559 962H2412.5" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
+<path id="red SPLIT" class="flow-reverse" d="M2994 1346.5V1250.5L2907 1163.5H2808.5L2643 998L2410 998" stroke="#D63C3C" stroke-width="4" stroke-linecap="round"/>
 </g>
 <g id="WATER_LINES">
-<path id="blue FRACT" d="M2050 1818.5H1943.5L1870.5 1891.5V2278" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
-<path id="blue GLY" d="M1911 1852L2142 2083H2414L2698.5 2367.5H2858.5" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
-<path id="blue SPLIT" d="M2278 1721V1629L2559.5 1347.5H2878" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
-<path id="blue TANK" d="M2609.5 1346.5V955.5L3082 483" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
-<path id="blue SOAP" d="M2711 853L2625.5 767.5H2299L2092 560.5H1859L1781 482.5" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
-<path id="blue HYDRO" d="M2249.5 1722V1627L2139 1527.11H1138.5L984 1362H733" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
-<path id="blue UTI" d="M1796 1526V1409" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
-<path id="blue GENERAL" d="M2169.5 637.001L2121.5 685.001L797.5 685L595 482.5" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
-<path id="blue FAME" d="M1870.5 1940.5L1729 2082H938.5L741 2279.5" stroke="#41B9B1" stroke-width="3" stroke-linecap="round"/>
+<path id="blue FRACT" d="M2050 1818.5H1943.5L1870.5 1891.5V2278" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
+<path id="blue GLY" d="M1911 1852L2142 2083H2414L2698.5 2367.5H2858.5" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
+<path id="blue SPLIT" d="M2278 1721V1629L2559.5 1347.5H2878" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
+<path id="blue TANK" d="M2609.5 1346.5V955.5L3082 483" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
+<path id="blue SOAP" d="M2711 853L2625.5 767.5H2299L2092 560.5H1859L1781 482.5" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
+<path id="blue HYDRO" d="M2249.5 1722V1627L2139 1527.11H1138.5L984 1362H733" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
+<path id="blue UTI" d="M1796 1526V1409" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
+<path id="blue GENERAL" d="M2169.5 637.001L2121.5 685.001L797.5 685L595 482.5" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
+<path id="blue FAME" d="M1870.5 1940.5L1729 2082H938.5L741 2279.5" stroke="#41B9B1" stroke-width="4" stroke-linecap="round"/>
 </g>
 <g id="COMP_LINES">
-<path id="green TANK" d="M1830 712.5H2720L2950 482.5" stroke="#24742F" stroke-width="3" stroke-linecap="round"/>
-<path id="green FAME" d="M627 2280L889.5 2017.5V1918.5L979 1829H1188" stroke="#24742F" stroke-width="3" stroke-linecap="round"/>
-<path id="green FRACT" d="M1551 1819H1688.5L1766 1896.5V2279" stroke="#24742F" stroke-width="3" stroke-linecap="round"/>
-<path id="green HYDRO" d="M1122.5 1829V1545.5L966 1389H732.5" stroke="#24742F" stroke-width="3" stroke-linecap="round"/>
-<path id="green SOAP" d="M1491 1723.5L1491 1338L1829.5 999.5L1829.5 611.5L1700.5 482.5" stroke="#24742F" stroke-width="3" stroke-linecap="round"/>
-<path id="green SPLIT" d="M1786 1045.5L2160 1419.5H2878" stroke="#24742F" stroke-width="3" stroke-linecap="round"/>
-<path id="green GLY" d="M2610.5 1420.5V2094.5L2752.5 2236.5H2861.5" stroke="#24742F" stroke-width="3" stroke-linecap="round"/>
+<path id="green TANK" d="M1830 712.5H2720L2950 482.5" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
+<path id="green class="flow-reverse" FAME" d="M627 2280L889.5 2017.5V1918.5L979 1829H1188" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
+<path id="green FRACT" d="M1551 1819H1688.5L1766 1896.5V2279" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
+<path id="green HYDRO" d="M1122.5 1829V1545.5L966 1389H732.5" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
+<path id="green SOAP" d="M1491 1723.5L1491 1338L1829.5 999.5L1829.5 611.5L1700.5 482.5" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
+<path id="green SPLIT" d="M1786 1045.5L2160 1419.5H2878" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
+<path id="green GLY" d="M2610.5 1420.5V2094.5L2752.5 2236.5H2861.5" stroke="#24742F" stroke-width="4" stroke-linecap="round"/>
 </g>
 </g>
 </svg>
