@@ -1,7 +1,5 @@
-// HAPUS bagian const equipInfo dari file ini. Kita murni menggunakan database dari main.js!
-
 let zoomScale = 1, pointX = 0, pointY = 0, isPanning = false, startPos = { x: 0, y: 0 };
-let currentSvg = null; // Menyimpan referensi diagram yang sedang dilihat
+let currentSvg = null; 
 
 function resetZoom() { 
     zoomScale = 1; pointX = 0; pointY = 0; 
@@ -15,20 +13,19 @@ function applyTransform() {
 }
 
 // ==========================================
-// 1. FUNGSI INTI: MEMASANG INTERAKSI KE SVG
+// 1. FUNGSI INTI: MEMASANG INTERAKSI
 // ==========================================
 function attachInteractions(svg) {
-    if (!svg) return;
+    if (!svg || svg === currentSvg) return;
     currentSvg = svg;
     
-    // Pastikan container menangkap event mouse/wheel
     const container = svg.parentElement;
     if (!container) return;
 
-    // Reset posisi saat diagram baru dimuat
+    container.style.cursor = 'grab';
     resetZoom();
 
-    // -- FITUR: SCROLL ZOOM --
+    // -- EVENT: MOUSE WHEEL (ZOOM) --
     container.onwheel = (e) => {
         e.preventDefault();
         const delta = e.wheelDelta ? e.wheelDelta : -e.deltaY;
@@ -38,25 +35,30 @@ function attachInteractions(svg) {
         if (delta > 0) zoomScale *= 1.1; 
         else zoomScale /= 1.1;
         
-        zoomScale = Math.min(Math.max(0.1, zoomScale), 15); // Batas zoom in/out
+        zoomScale = Math.min(Math.max(0.1, zoomScale), 15); 
         pointX = e.clientX - xs * zoomScale;
         pointY = e.clientY - ys * zoomScale;
         applyTransform();
     };
 
-    // -- FITUR: DRAG PAN (GESER) --
+    // -- EVENT: MOUSE DOWN (PAN START) --
     container.onmousedown = (e) => { 
+        if (e.button !== 0) return; // Hanya klik kiri
         e.preventDefault(); 
         startPos = { x: e.clientX - pointX, y: e.clientY - pointY }; 
         isPanning = true; 
         container.style.cursor = 'grabbing';
     };
+
+    // -- EVENT: MOUSE MOVE (PANNING) --
     window.onmousemove = (e) => { 
         if (!isPanning) return; 
         pointX = e.clientX - startPos.x; 
         pointY = e.clientY - startPos.y; 
         applyTransform(); 
     };
+
+    // -- EVENT: MOUSE UP (PAN END) --
     window.onmouseup = () => {
         isPanning = false;
         if(container) container.style.cursor = 'grab';
@@ -64,21 +66,17 @@ function attachInteractions(svg) {
 
     // -- FITUR: HOVER TOOLTIP --
     const popup = document.getElementById('info-popup');
-    // Cek apakah equipInfo dari main.js sudah terbaca
     if (popup && typeof equipInfo !== 'undefined') {
         svg.querySelectorAll('*').forEach(el => {
             const id = (el.getAttribute('id') || '').toUpperCase();
+            if (!id || id.startsWith('LINE') || el.tagName === 'g' || el.tagName === 'defs') return; 
             
-            // Abaikan garis pipa atau elemen kosong agar tidak error
-            if (id === 'STM01' || id.startsWith('LINE') || el.tagName === 'g') return; 
-            
-            // Cari kecocokan ID dengan database equipInfo
             let key = Object.keys(equipInfo).find(k => id.includes(k) || (el.textContent && el.textContent.toUpperCase().includes(k)));
             
             if (key) {
                 el.style.cursor = 'help'; 
                 el.style.pointerEvents = 'all';
-                el.onmouseenter = () => {
+                el.onmouseenter = (e) => {
                     document.getElementById('popup-title').innerText = equipInfo[key].title;
                     document.getElementById('popup-body').innerText = equipInfo[key].body;
                     popup.classList.add('visible');
@@ -92,55 +90,53 @@ function attachInteractions(svg) {
         });
     }
 
-    // -- TRIGGER ANIMASI KHUSUS --
+    // -- FITUR: ANIMASI --
     const fire = svg.getElementById('GLOW FIRE') || svg.querySelector('[id="GLOW FIRE"]');
     if (fire) fire.classList.add('furnace-glow');
     svg.querySelectorAll('[id^="blade"], [id^="BLADE"]').forEach(f => f.classList.add('fan-spin'));
 }
 
 // ==========================================
-// 2. PEMICU MANUAL SAAT GANTI HALAMAN
+// 2. FUNGSI PEMAKSA (FORCE INIT)
 // ==========================================
 function initZoomAndPan() {
-    const activeContainer = document.querySelector('.diagram-wrapper.active');
-    if (!activeContainer) return;
+    // Mencari SVG di dalam section yang saat ini memiliki class .active
+    const activeSection = document.querySelector('.page-section.active');
+    if (!activeSection) return;
     
-    const svg = activeContainer.querySelector('svg');
-    if (svg) attachInteractions(svg);
+    const activeWrapper = activeSection.querySelector('.diagram-wrapper.active') || activeSection.querySelector('.diagram-wrapper');
+    if (!activeWrapper) return;
+    
+    const svg = activeWrapper.querySelector('svg');
+    if (svg) {
+        attachInteractions(svg);
+    } else {
+        // Jika belum ada SVG (mungkin masih loading), coba lagi dalam 300ms
+        setTimeout(initZoomAndPan, 300);
+    }
 }
 
 // ==========================================
-// 3. RADAR PINTAR (MUTATION OBSERVER)
+// 3. OBSERVER & LOAD EVENT
 // ==========================================
-// Radar ini dengan sabar menunggu file SVG selesai disuntikkan oleh main.js
 const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-        if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-            mutation.addedNodes.forEach(node => {
-                if (node.tagName && node.tagName.toLowerCase() === 'svg') {
-                    // Begitu SVG masuk ke wadah yang aktif, langsung pasang interaksinya!
-                    if (node.parentElement.classList.contains('active')) {
-                        attachInteractions(node);
-                    }
-                }
-            });
-        }
+        mutation.addedNodes.forEach(node => {
+            if (node.tagName && node.tagName.toLowerCase() === 'svg') {
+                initZoomAndPan();
+            }
+        });
     });
 });
 
-// Nyalakan radar saat halaman pertama kali diload
 window.addEventListener('load', () => {
     document.querySelectorAll('.diagram-wrapper').forEach(wrapper => {
         observer.observe(wrapper, { childList: true });
     });
-    
-    // Tembakan ekstra untuk memastikan sistem tidak terlewat
-    setTimeout(initZoomAndPan, 500);
+    initZoomAndPan();
 });
 
-// ==========================================
-// 4. ALIAS GLOBAL (Agar tidak error saat dipanggil oleh menu di HTML)
-// ==========================================
+// Alias Global
 window.initBoilerInteractions = initZoomAndPan;
 window.initZoomAndPan = initZoomAndPan;
 window.resetZoom = resetZoom;
