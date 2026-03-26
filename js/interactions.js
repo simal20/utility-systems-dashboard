@@ -71,7 +71,7 @@ function attachInteractions(wrapper) {
     wrapper.addEventListener('touchend', endDrag);
     wrapper.addEventListener('mouseleave', endDrag);
 
-    // Fungsi reset mandiri tiap wrapper
+    // Wrapper Reset
     wrapper.resetZoom = () => { scale = 1; posX = 0; posY = 0; apply(); };
 }
 
