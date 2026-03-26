@@ -1,6 +1,8 @@
 <svg viewBox="0 0 3600 2769" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="STM01" clip-path="url(#clip0_1874_211)">
         <rect width="3600" height="2769" fill="#0A0D14"/>
+        <text id="TRAVELLING GRATE" fill="#D2D2D2" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="834.125" y="2139.43">TRAVELLING GRATE</tspan></text>
+        <rect x="525" y="2038" width="1034" height="159" rx="79.5" fill="#3A3A3A" stroke="#777777" stroke-width="10" stroke-linecap="round" stroke-dasharray="25 25"/>
 
         <mask id="path-2-outside-1_1874_211" maskUnits="userSpaceOnUse" x="507" y="310" width="1706" height="2185" fill="black">
             <rect fill="white" x="507" y="310" width="1706" height="2185"/>
@@ -18,9 +20,7 @@
         <text id="FLY ASH" fill="#977A58" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="2842.27" y="2503.43">FLY ASH</tspan></text>
         <text id="MAIN STEAM" fill="#ECE998" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="2049.39" y="178.432">MAIN STEAM</tspan></text>
 
-        <text id="TRAVELLING GRATE" fill="#D2D2D2" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="834.125" y="2139.43">TRAVELLING GRATE</tspan></text>
-        <rect x="525" y="2038" width="1034" height="159" rx="79.5" fill="#3A3A3A" stroke="#777777" stroke-width="10" stroke-linecap="round" stroke-dasharray="25 25"/>
-
+        
         <rect id="GLOW FIRE" x="513" y="757" width="1059" height="1362" fill="url(#paint4_radial_1874_211)"/>
         <g id="SMOKE">
             <ellipse id="Ellipse 178" cx="3408" cy="619.5" rx="48" ry="45.5" fill="#6D6D6D"/>
