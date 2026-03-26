@@ -18,7 +18,7 @@
     <text id="FLY ASH" fill="#977A58" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="2842.27" y="2503.43">FLY ASH</tspan></text>
     <text id="MAIN STEAM" fill="#ECE998" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="2049.39" y="178.432">MAIN STEAM</tspan></text>
     
-    <g id="TRAVELLING GRATE"> <!--- STEAM DRUM -->
+    <g id="TRAVELLING GRATE"> 
         <text fill="#D2D2D2" style="white-space: pre" xml:space="preserve" font-family="Share Tech Mono" font-size="48" letter-spacing="0em"><tspan x="834.125" y="2139.43">TRAVELLING GRATE</tspan></text>
         <rect x="525" y="2038" width="1034" height="159" rx="79.5" fill="#3A3A3A" stroke="#777777" stroke-width="10" stroke-linecap="round" stroke-dasharray="25 25"/>
     </g>
